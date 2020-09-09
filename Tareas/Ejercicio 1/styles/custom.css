@@ -1,0 +1,60 @@
+<style>
+div.error {
+    background-color: #fcf2f2;
+    border-color: #8b0000;
+    border-left: 10px solid #8b0000;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 2rem;
+    margin: 0rem;
+    text-align: center;
+
+    }
+
+div.warning {
+    background-color: #fcf2f2;
+    border-color: #f0ad4e;
+    border-left: 10px solid #f0ad4e;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 2rem;
+    margin: 0rem;
+    text-align: center;
+
+    }
+
+span.rainbow {
+    background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+    background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+    color:transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+
+.codebox {
+    background-color: #34495e;
+    border-color: #1d1d1d;
+    border-left: 10px solid #1d1d1d;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 5rem;
+    text-align: left;
+    white-space: pre-line;
+
+}
+.codebox p {
+    /* Styles in here affect the text of the codebox */
+    font-family: monospace, monospace;
+    font-size: 11pt !important;
+    line-height: 170% !important;
+    border-left: none;
+    color: #ecf0f1;
+    /* You could also put all sorts of styling here, like different font, color, underline, etc. for the code. */
+}
+
+
+</style>
