@@ -18,9 +18,10 @@ sys.path.append('D:/LucasLiaño/Escritorio/Lucas/UTN/PSD/Tareas (Spyder)')
 import myLibrary as my
 import matplotlib.pyplot as plt
 import numpy as np
+from pandas import DataFrame
 
-fs = 500
-N = 500
+fs = 50
+N = 50
 
 #%% Cosas propias del ejercicio :D
 
@@ -32,7 +33,7 @@ tus_resultados = [ ['$ \lvert X(f_0) \lvert$', '$ \lvert X(f_0+1) \lvert $', '$\
 # Inicializamos la entidad loopeable.
 fd = (0, 0.01, 0.25, 0.5)
 
-
+W = fs/N
 
 for each in fd:
     foL = fs/4 + each
@@ -41,18 +42,29 @@ for each in fd:
     
     fig, axs = plt.subplots(1,2)
                       
-    axs[0].stem(kkL, np.abs(FkkL)) 
+    axs[0].stem(kkL* W, np.abs(FkkL), use_line_collection = True) 
     axs[0].set_xlabel('Frecuencia [k*W]')  
     axs[0].set_ylabel('Amplitud [V]')  
     axs[0].set_title("Módulo") 
                   
-    axs[1].stem(kkL, np.angle(FkkL))
+    axs[1].stem(kkL* W, np.angle(FkkL), use_line_collection = True)
     axs[1].set_xlabel('Frecuencia [k*W]')  
     axs[1].set_ylabel('Amplitud [V]')  
     axs[1].set_title("Fase") 
     
-    #tus_resultados.append([])
+    # Nota: Voy a escalar todas las componentes en 2/N para que me quede representada la energía
+    tus_resultados.append([ (np.abs(FkL[int(foL)  ]) * 2/N), 
+                            (np.abs(FkL[int(foL)+1]) * 2/N),
+                            ((np.sum(np.abs(FkL)**2) - (np.abs(FkL[int(foL)])*2)) * 2/N)  
+                          ])
     
+df = DataFrame(tus_resultados, columns=['Frecuencia central', 'Primer adyacente', 'Resto de frecuencias'],
+               index=['$f_0$ \ expr. matemática', 
+                      '', 
+                      '$f_S/4$', 
+                      '$f_S/4+0.01$', 
+                      '$f_S/4+0.25$', 
+                      '$f_S/4+0.5$'])
     
     
     
