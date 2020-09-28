@@ -20,14 +20,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pandas import DataFrame
 
-fs = 50
-N = 50
+fs = 1000
+N = 1000
 
 #%% Cosas propias del ejercicio :D
 
 # Inicializamos las variables donde vamos a almacenar los datos :D
-tus_resultados = [ ['$ \lvert X(f_0) \lvert$', '$ \lvert X(f_0+1) \lvert $', '$\sum_{i=F} \lvert X(f_i) \lvert ^2 $'], 
-                   [''                       , ''                          , '$F:f \neq f_0$'                       ] 
+tus_resultados = [ ['$ \lvert X(N/4) \lvert$', '$ \lvert X(N/4+1) \lvert $', '$\sum_{i=F} \lvert X(f_i) \lvert ^2 $'], 
+                   [''                       , ''                          , '$F:f_i \neq N/4$'                       ] 
                  ]
 
 # Inicializamos la entidad loopeable.
@@ -35,10 +35,11 @@ fd = (0, 0.01, 0.25, 0.5)
 
 W = fs/N
 
+
 for each in fd:
     foL = fs/4 + each
     tL,fL = my.SignalGenerator ('sin',(foL, 1), fs, N, (0, 0));
-    kL, FkL, kkL, FkkL = my.DFT(fL, N);
+    kL, FkL, kkL, FkkL = my.DFT(fL, N, W);
     
     fig, axs = plt.subplots(1,2)
                       
@@ -52,10 +53,12 @@ for each in fd:
     axs[1].set_ylabel('Amplitud [V]')  
     axs[1].set_title("Fase") 
     
-    # Nota: Voy a escalar todas las componentes en 2/N para que me quede representada la energía
-    tus_resultados.append([ (np.abs(FkL[int(foL)  ]) * 2/N), 
-                            (np.abs(FkL[int(foL)+1]) * 2/N),
-                            ((np.sum(np.abs(FkL)**2) - (np.abs(FkL[int(foL)])*2)) * 2/N)  
+    # Nota: Todas las componentes ya estan escaladas en 2/N para que me quede representada la energía
+    # Nota importante : Como en este caso tenemos fs = N, podemos hacer N/4 y vamos a tener el valor de la frecuencia de interes
+    # Nota importante2: No vamos a poder pedir el valor de Fk(fs/4 + fd) porque la resolución espectral no lo permite. 
+    tus_resultados.append([ (np.abs(FkkL[int( N/4)    ]) ), 
+                            (np.abs(FkkL[int( N/4) + 1]) ),
+                            ((np.sum(np.abs(FkkL)**2) - (np.abs(FkkL[int( N/4)])**2)))  
                           ])
     
 df = DataFrame(tus_resultados, columns=['Frecuencia central', 'Primer adyacente', 'Resto de frecuencias'],
@@ -66,6 +69,7 @@ df = DataFrame(tus_resultados, columns=['Frecuencia central', 'Primer adyacente'
                       '$f_S/4+0.25$', 
                       '$f_S/4+0.5$'])
     
+HTML(df.to_html())
     
     
     
