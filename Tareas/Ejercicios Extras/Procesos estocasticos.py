@@ -6,6 +6,10 @@ Resumen: En este ejercicio se van a simular multiples corridas del espacio de mu
 
 @author: LucasLiaño
 """
+#%% Agrego librería propia al path
+import sys
+sys.path.append('D:/LucasLiaño/Escritorio/Lucas/UTN/PSD/Tareas (Spyder)')
+
 #%% Se importan libreriras adecuadas
 import numpy as np
 import matplotlib.pyplot as plt
@@ -29,7 +33,7 @@ ax2.set_title("Análisis en frecuencia")
 # Genero las señales a plottear
 for i in range(0,1000,100):
     t2,f2 = my.SignalGenerator ('n',(0, 1) ,fs, N + i, (0, 0));
-    k2, Fk2, kk2, Fkk2 = my.DFT(f2, N + i);
+    k2, Fk2, kk2, Fkk2 = my.DFT(f2, N + i, W);
     ax5.plot(t2 - (N+i)/(2*fs), np.correlate(f2,f2,'same'), label='Ruido N = 1000+'+str(i))  #Hay que escalar esto. 
     ax2.plot(kk2*W, np.abs(Fkk2), label='Ruido con $\sigma$ = '+str(np.std(f2)) )  #Hay que escalar esto. 
 

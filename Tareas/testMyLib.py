@@ -6,6 +6,11 @@ Este archivo permite verificar que la librería este funcionando correctamente
 
 @author: LucasLiaño
 """
+#%% Agrego librería propia al path
+import sys
+sys.path.append('D:/LucasLiaño/Escritorio/Lucas/UTN/PSD/Tareas (Spyder)')
+
+#%%
 import myLibrary as my
 
 fs = 1000

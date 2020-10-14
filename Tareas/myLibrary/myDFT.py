@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
+﻿#%% Se crea la función DFT
 """
 Created on Wed Sep 16 01:58:21 2020
 
 Resumen:
 
-    k, Fk, kk, Fkk = myDFT(f, N, plotting = False, nombre = 'f(t)', colorTrazo = 'b')
+    k, Fk, kk, Fkk = DFT(f, N, plotting = False, nombre = 'f(t)', colorTrazo = 'b', escala='a')
     
     La función devuelve la transformada discreta de Fourier completa (k, Fk)
     y las tranformadas recortadas entre 0 y fs/2 y escaladas. 
@@ -14,10 +14,8 @@ Resumen:
 @author: LucasLiaño
 """
 
-#%% Se crea la función DFT
 
-def myDFT(f, N, plotting = False, nombre='f(t)', colorTrazo = 'b'):
-    W = 1/((f[1]-f[0])*N)
+def DFT(f, N, W=1, plotting = False, nombre='f(t)', colorTrazo = 'b', escala='a'):
     
     k = np.arange(0,N).astype(int)      #Calculamos la base temporal discreta
 
@@ -32,8 +30,13 @@ def myDFT(f, N, plotting = False, nombre='f(t)', colorTrazo = 'b'):
     
     Fk = np.matmul(Wkn,f)
     
-    Fkk = Fk[:int(N/2)] * (2/N) # Recortamos la señal hasta fs/2 y la escalamos en (2/N)
+    Fkk = Fk[:int(N/2)] * (1/N) # Recortamos la señal hasta fs/2 y la escalamos en (2/N)
     kk = k[:int(N/2)]          # También recortamos la base temporal
+    
+    if (escala = 'a'): # Si queremos que coincida la amplitud 
+        Fkk = Fkk * 2
+    elif (escala = 'p'): # Si queremos que coincida la potencia en tiempo con la pot en w
+        Fkk = Fkk * np.sqrt(2)
     
     if plotting == True:
         
@@ -51,17 +54,17 @@ def myDFT(f, N, plotting = False, nombre='f(t)', colorTrazo = 'b'):
         axs[0,1].set_title("Fase") 
         axs[0,1].legend()
         
-        axs[1,0].plot(kk*W, np.real(Fkk), label = nombre, color= colorTrazo)  
-        axs[1,0].set_xlabel('Frecuencia [k*W]')  
-        axs[1,0].set_ylabel('Amplitud [V]')  
-        axs[1,0].set_title("Parte Real") 
-        axs[1,0].legend()
+        # axs[1,0].plot(kk*W, np.real(Fkk), label = nombre, color= colorTrazo)  
+        # axs[1,0].set_xlabel('Frecuencia [k*W]')  
+        # axs[1,0].set_ylabel('Amplitud [V]')  
+        # axs[1,0].set_title("Parte Real") 
+        # axs[1,0].legend()
         
                       
-        axs[1,1].plot(kk*W, np.imag(Fkk), label = nombre, color= colorTrazo)  
-        axs[1,1].set_xlabel('Frecuencia [k*W]')  
-        axs[1,1].set_ylabel('Amplitud [V]')  
-        axs[1,1].set_title("Parte Imaginaria") 
-        axs[1,1].legend()
+        # axs[1,1].plot(kk*W, np.imag(Fkk), label = nombre, color= colorTrazo)  
+        # axs[1,1].set_xlabel('Frecuencia [k*W]')  
+        # axs[1,1].set_ylabel('Amplitud [V]')  
+        # axs[1,1].set_title("Parte Imaginaria") 
+        # axs[1,1].legend()
     
     return k, Fk, kk, Fkk

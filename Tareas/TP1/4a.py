@@ -24,18 +24,19 @@ N = 1000
 
 #%% Cosas propias del ejercicio :D
 
-# Inicializamos las variables donde vamos a almacenar los datos :D
+#Inicializamos las variables donde vamos a almacenar los datos :D
 tus_resultados = [ ['$\sum_{f=0}^{f_S/2} \lvert X(f) \rvert ^2$', '$ \lvert X(f_0) \rvert ^2 $', '$ \mathop{arg\ max}_f \{\lvert X(f) \rvert ^2\} $'], 
-                   ['',                                     '',                           '$f \in [0:f_S/2]$'], 
-                   [ '', '','']
-                 ]
+                    ['',                                     '',                           '$f \in [0:f_S/2]$'], 
+                    [ '', '','']
+                  ]
 tus_resultados.append(['1', '1', '9'])
 tus_resultados.append([ '', '',''])
 
 
+
 W = fs/N
 fo = 9 * W
-A = 1
+A = np.sqrt(6) 
 
 t,f = my.SignalGenerator ('sin',(fo, A), fs, N, (0, 0));
 
@@ -56,8 +57,9 @@ axs.set_xlabel('Frecuencia [k*W]')
 axs.set_ylabel('Amplitud [V]')  
 axs.set_title("Módulo") 
 
-tus_resultados.append([ (np.sum(np.abs(Fkk)**2)     ), 
-                        (np.abs(Fkk[int(fo)])       ),
+tus_resultados.append([ (np.mean((f)**2)    ), 
+                        (np.sum(np.abs(Fkk)**2)    ), 
+                        (np.abs(Fkk[int(fo)])**2    ),
                         (np.argmax(np.abs(Fkk)**2)  )   
                       ])
 
@@ -73,7 +75,6 @@ df = DataFrame(tus_resultados, columns=['Energía total', 'Energía en $f_0$', '
                       'simulación'])
     
     
-    
-    
+
     
     

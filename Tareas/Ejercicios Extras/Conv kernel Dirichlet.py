@@ -20,7 +20,7 @@ import numpy as np
 from pandas import DataFrame
 
 N = 1000
-fs = 1000
+fs1 = 1000
 
 #%% Procesamiento
 

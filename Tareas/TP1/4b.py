@@ -29,7 +29,7 @@ tus_resultados = [ ['$\sum_{f=0}^{f_S/2} \lvert X(f) \rvert ^2$', '$ \lvert X(f_
                    ['',                                     '',                           '$f \in [0:f_S/2]$'], 
                    [ '', '','']
                  ]
-tus_resultados.append(['1', '1', '9'])
+tus_resultados.append(['1/9', '1/9', '9'])
 tus_resultados.append([ '', '',''])
 
 
@@ -37,14 +37,16 @@ W = fs/N
 fo = 9 * W
 A = 1
 
-t,f = my.SignalGenerator ('sin',(fo, A), fs, N, (0, 0));
+t,f2 = my.SignalGenerator ('sin',(fo, A), fs, N, (0, 0));
+
+f2[int((3*N)/fo):] = 0
 
 
-k, Fk, kk, Fkk = my.DFT(f, N, W);
+k, Fk, kk, Fkk = my.DFT(f2, N, W);
 
 fig, axs = plt.subplots(1)
                       
-axs.plot(f) 
+axs.plot(f2) 
 axs.set_xlabel('Tiempo [n*Ts]')  
 axs.set_ylabel('Amplitud [V]')  
 axs.set_title("Análisis temporal") 
@@ -53,6 +55,7 @@ fig, axs = plt.subplots(1)
                   
 axs.stem(kk* W, np.abs(Fkk), use_line_collection = True) 
 axs.set_xlabel('Frecuencia [k*W]')
+axs.set_xlim(0,50)
 axs.set_ylabel('Amplitud [V]')  
 axs.set_title("Módulo") 
 

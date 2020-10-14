@@ -12,7 +12,7 @@ sys.path.append('D:/LucasLiaño/Escritorio/Lucas/UTN/PSD/Tareas (Spyder)')
 
 #%% Importo librerías
 import numpy as np
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 
 #%%
@@ -22,14 +22,21 @@ fs = 1000
 N = 1000
 W = fs/N
 
-t1,f1 = my.SignalGenerator ('sin',(100, 1) ,fs, N, (0, 0));
-k1, Fk1, kk1, Fkk1 = my.DFT(f1, N, W);
+A = 2
+
+t1,f1 = my.SignalGenerator ('sin',(100, A) ,fs, N, (0, 0));
+k1, Fk1, kk1, Fkk1 = my.DFT(f1, N, W, escala='p');
 
 # Si queremos que se cumpla Parserval (Es decir que la potencia en t y en w sean iguales)
 # se va a tener que cumplir que la sumatoria del modulo cuadrado en t sea igual a la sumatoria en modulo 2 en w
 
-cte = np.sum(f1**2)/ np.sum(np.abs(Fk1)**2)
 
-# sum f[n] = cte * sum Fk[k]
+potf = np.mean(f1**2)
+potw = np.sum(np.abs(Fkk1)**2)
+cte = potw/potf
 
-# Vemos que cte se aproxima a 1/N (Debe haber alguna falla en algun lado y no se donde :D)
+# Vemos que coincide la potencia porque multiplicamos por un factor de raiz de 2 en Fkk
+# Pero vemos que no coincide la amplitud
+
+plt.figure(1)
+plt.plot(np.abs(Fkk1))
